@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.format.DateTimeFormatter;
+
 @AllArgsConstructor
 @Getter
 public class CreatePersonResponse {
@@ -17,10 +19,10 @@ public class CreatePersonResponse {
 
     public static CreatePersonResponse fromEntity(Person personEntity){
         return new CreatePersonResponse(
-                personEntity.getId().toString(),
-                personEntity.getDocument(),
-                personEntity.getName(),
-                personEntity.getCreatedAt().toString()
+            personEntity.getId().toString(),
+            personEntity.getDocument(),
+            personEntity.getName(),
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").format(personEntity.getCreatedAt())
         );
     }
 }

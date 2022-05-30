@@ -1,6 +1,5 @@
 package br.com.lyviston.person.http.controller;
 
-import br.com.lyviston.person.exception.DocumentException;
 import br.com.lyviston.person.http.dto.CreatePersonRequest;
 import br.com.lyviston.person.http.dto.CreatePersonResponse;
 import br.com.lyviston.person.usecase.CreatePersonUsecase;
@@ -23,12 +22,12 @@ public class PersonController {
         return ResponseEntity.ok("oi");
     }
 
-
-
     @PostMapping
-    public ResponseEntity<CreatePersonResponse> createPerson(@RequestBody CreatePersonRequest personRequest) throws DocumentException {
+    public ResponseEntity<CreatePersonResponse> createPerson(@RequestBody CreatePersonRequest personRequest) throws Exception {
 
-        var result = CreatePersonResponse.fromEntity(createPersonUsecase.execute());
+        var result = CreatePersonResponse.fromEntity(
+            createPersonUsecase.execute(personRequest.toEntity())
+        );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }

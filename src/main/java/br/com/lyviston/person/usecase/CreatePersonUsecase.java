@@ -1,16 +1,18 @@
 package br.com.lyviston.person.usecase;
 
 import br.com.lyviston.person.domain.entity.Person;
-import br.com.lyviston.person.exception.DocumentException;
+import br.com.lyviston.person.usecase.repository.PersonRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Service
+@AllArgsConstructor
 public class CreatePersonUsecase {
 
-    public Person execute() throws DocumentException {
-        return new Person(UUID.randomUUID(), "123.123.123.87", "Raimundo da Silva", LocalDateTime.now());
+    private final PersonRepository repository;
+
+    public Person execute(Person person) throws Exception {
+        person = repository.save(person);
+        return person;
     }
 }
